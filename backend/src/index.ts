@@ -9,12 +9,17 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// Allow all origins for the assessment deployment to avoid CORS headaches
-app.use(cors());
+app.use(cors({
+  origin: "*", // Allows any website to talk to this API
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 app.use(express.json());
 
+// Health check 
 app.get("/health", (_req, res) => {
-  res.json({ status: "ok", timestamp: new Date().toISOString() });
+  res.status(200).send("Server is healthy");
 });
 
 app.use("/api", router);
