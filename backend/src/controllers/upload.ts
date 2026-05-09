@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import pdfParse from "pdf-parse";
-import { parseResumeText, ParsedResume } from "../utils/parser";
+import { parseResumeText } from "../utils/parser";
+import { calculateScore, generateBatchReport, ResumeScore } from "../utils/scorer";
 
 export async function uploadResumes(
   req: Request,
@@ -15,16 +16,15 @@ export async function uploadResumes(
       return;
     }
 
-    const results: ParsedResume[] = [];
+    const scores: ResumeScore[] = [];
     const errors: { file: string; reason: string }[] = [];
 
     for (const file of files) {
       try {
         const data = await pdfParse(file.buffer);
         const parsed = parseResumeText(data.text, file.originalname);
-        results.push(parsed);
+        scores.push(calculateScore(parsed));
       } catch (err) {
-        // Isolate per-file failures so one bad PDF doesn't kill the batch
         errors.push({
           file: file.originalname,
           reason: err instanceof Error ? err.message : "Unknown parse error",
@@ -32,11 +32,19 @@ export async function uploadResumes(
       }
     }
 
+    if (scores.length === 0) {
+      res.status(422).json({
+        error: "All uploaded files failed to process.",
+        errors,
+      });
+      return;
+    }
+
+    const report = generateBatchReport(scores);
+
     res.status(200).json({
-      processed: results.length,
-      failed: errors.length,
-      errors: errors.length ? errors : undefined,
-      results,
+      ...report,
+      ...(errors.length ? { processingErrors: errors } : {}),
     });
   } catch (err) {
     next(err);
