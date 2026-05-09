@@ -7,9 +7,10 @@ import { errorHandler } from "./middleware/errorHandler";
 dotenv.config();
 
 const app = express();
-const PORT = 5001;
+const PORT = process.env.PORT || 5001;
 
-app.use(cors({ origin: process.env.FRONTEND_URL || "http://localhost:3000" }));
+// Allow all origins for the assessment deployment to avoid CORS headaches
+app.use(cors());
 app.use(express.json());
 
 app.get("/health", (_req, res) => {
@@ -20,5 +21,5 @@ app.use("/api", router);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
+  console.log(`Backend running on port ${PORT}`);
 });

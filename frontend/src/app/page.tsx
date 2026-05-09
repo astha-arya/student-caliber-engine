@@ -305,7 +305,9 @@ export default function HomePage() {
     files.forEach((f) => form.append("resumes", f));
 
     try {
-      const res = await fetch("/api/resumes/upload", {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";
+      
+      const res = await fetch(`${API_BASE}/api/resumes/upload`, {
         method: "POST",
         body: form,
       });
