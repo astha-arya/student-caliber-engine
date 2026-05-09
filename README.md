@@ -6,8 +6,8 @@ An institutional-level diagnostic tool designed to assess the placement readines
 - **Frontend:** https://student-caliber-engine.vercel.app
 - **Backend:** https://student-caliber-backend.onrender.com
 
-## 🧠 The "Deterministic" Analysis Engine (No AI)
-This project strictly adheres to the "No AI/LLM" constraint. Instead of using black-box models, the analysis is driven by a custom-built scoring engine:
+## 🧠 The Deterministic Analysis Engine
+To ensure maximum precision and ATS compliance, this system replaces generative AI with a high-performance, rule-based analysis engine. It extracts and evaluates resume data through structured logic, providing a transparent and reproducible metric for batch-level readiness.
 
 - **Text Extraction:** Utilizes `pdf-parse` to retrieve raw text buffers.
 - **ATS Validation:** Implements Regex patterns and string matching to detect essential links (GitHub, LinkedIn) and contact info.
