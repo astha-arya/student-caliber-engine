@@ -20,6 +20,42 @@ To ensure maximum precision and ATS compliance, this system replaces generative 
 - **Backend:** Node.js, Express, Multer (Memory Storage), TypeScript.
 - **Deployment:** Vercel (Frontend) & Render (Backend).
 
+## 📁 Project Structure
+
+```bash
+student-caliber-engine/
+├── backend/
+│   ├── src/
+│   │   ├── controllers/
+│   │   │   └── upload.ts
+│   │   ├── middleware/
+│   │   │   └── errorHandler.ts
+│   │   ├── utils/
+│   │   │   ├── parser.ts
+│   │   │   └── scorer.ts
+│   │   ├── index.ts
+│   │   └── router.ts
+│   ├── .env.example
+│   ├── package.json
+│   └── tsconfig.json
+│
+│
+├── frontend/
+│   ├── src/
+│   │   └── app/
+│   │       ├── globals.css
+│   │       ├── layout.tsx
+│   │       └── page.tsx
+│   ├── .env.local.example
+│   ├── next.config.mjs
+│   ├── postcss.config.mjs
+│   ├── package.json
+│   └── tsconfig.json
+│
+├── .gitignore
+└── README.md
+```
+
 ## 📥 Local Setup
 
 1. Clone the repo
